@@ -2,11 +2,11 @@ import numpy as np
 from tensorflow import keras
 from PIL import Image
 
-model = keras.models.load_model('zadatak_1_model.keras')
-#model = load_model('zadatak_1_model.keras')
+model = keras.models.load_model('FCN/zad_model.h5')
 
-def do_prediction(path):
-    image = Image.open(path).convert('L')
+for i in range(10):
+    image_path = f'tests/test_{i}.png'
+    image = Image.open(image_path).convert('L')
     image = image.resize((28, 28))
     image_array = np.array(image)
 
@@ -15,9 +15,5 @@ def do_prediction(path):
     image_array = np.expand_dims(image_array, axis=-1)
 
     predicted_label = np.argmax(model.predict(image_array))
-    print(f"Predicted: {predicted_label}")
 
-    print()
-    print(f"Testing...")
-    print("===================================")
-    do_prediction("tests/test.png")
+    print(f"Predicted label for {i}: {predicted_label}")
